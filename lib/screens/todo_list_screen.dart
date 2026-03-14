@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../data/mock_tasks.dart';
 import '../models/task.dart';
 import '../widgets/task_card.dart';
+import 'create_task_screen.dart';
 
 class TodoListScreen extends StatefulWidget {
   const TodoListScreen({super.key});
@@ -19,6 +20,21 @@ class _TodoListScreenState extends State<TodoListScreen> {
     });
   }
 
+  // thêm task mới
+  void addTask(String title) {
+    setState(() {
+      tasks.add(
+        Task(
+          id: DateTime.now().toString(),
+          userId: "u1",
+          title: title,
+          image: "imgs/study.png",
+          createdAt: DateTime.now(),
+        ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +44,20 @@ class _TodoListScreenState extends State<TodoListScreen> {
         itemCount: tasks.length,
         itemBuilder: (context, index) {
           return TaskCard(task: tasks[index], onToggle: toggleTask);
+        },
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () async {
+          final newTitle = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const CreateTaskScreen()),
+          );
+
+          if (newTitle != null) {
+            addTask(newTitle);
+          }
         },
       ),
     );
