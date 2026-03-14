@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:du_an_todolist/models/user.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  final User user;
+
+  const ProfileScreen({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -11,22 +14,19 @@ class ProfileScreen extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage("imgs/avatar.png"),
-            ),
+          children: [
+            CircleAvatar(radius: 50, backgroundImage: AssetImage(user.avatar)),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             Text(
-              "Nguyen Van A",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              user.name,
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
 
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
-            Text("Flutter Developer", style: TextStyle(fontSize: 16)),
+            Text(user.email, style: const TextStyle(fontSize: 16)),
           ],
         ),
       ),

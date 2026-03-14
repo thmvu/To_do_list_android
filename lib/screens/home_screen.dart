@@ -10,9 +10,9 @@ import 'package:du_an_todolist/screens/calendar_screen.dart';
 import 'package:du_an_todolist/screens/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  final User user;
+  final User? user;
 
-  const HomeScreen({super.key, required this.user});
+  const HomeScreen({super.key, this.user});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -20,12 +20,25 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
+
+  late User currentUser;
   late List<Task> userTasks;
 
   @override
   void initState() {
     super.initState();
-    userTasks = mockTasks.where((t) => t.userId == widget.user.id).toList();
+
+    currentUser =
+        widget.user ??
+        User(
+          id: "u1",
+          name: "Guest",
+          email: "guest@email.com",
+          password: "",
+          avatar: "imgs/avatar.png",
+        );
+
+    userTasks = mockTasks.where((t) => t.userId == currentUser.id).toList();
   }
 
   void _toggleTask(Task task) {
@@ -48,11 +61,11 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             CircleAvatar(
               radius: 18,
-              backgroundImage: AssetImage(widget.user.avatar),
+              backgroundImage: AssetImage(currentUser.avatar),
             ),
             const SizedBox(width: 10),
             Text(
-              "Xin chào, ${widget.user.name}!",
+              "Xin chào, ${currentUser.name}!",
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -61,7 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-
         actions: [
           IconButton(
             icon: const Icon(Icons.logout, color: Colors.white),
@@ -80,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           _buildTasksTab(),
           const CalendarScreen(),
-          ProfileScreen(user: widget.user),
+          ProfileScreen(user: currentUser),
           const AboutScreen(),
         ],
       ),
@@ -96,12 +108,9 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),
-
         selectedItemColor: Custom_green,
         unselectedItemColor: Colors.grey,
-
         type: BottomNavigationBarType.fixed,
-
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.checklist_rounded),
@@ -121,7 +130,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // ── Tab 0: Danh sách nhiệm vụ ──────────────────────────────────────────────
+  // ================= TASK TAB =================
+
   Widget _buildTasksTab() {
     return Column(
       children: [
@@ -136,9 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 "$completedCount / ${userTasks.length} nhiệm vụ hoàn thành",
                 style: const TextStyle(color: Colors.white, fontSize: 14),
               ),
-
               const SizedBox(height: 8),
-
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: LinearProgressIndicator(
@@ -189,23 +197,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       child: ListTile(
-        leading: GestureDetector(
-          onTap: () => _toggleTask(task),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            width: 28,
-            height: 28,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: task.completed ? Custom_green : Colors.transparent,
-              border: Border.all(
-                color: task.completed ? Custom_green : Colors.grey.shade400,
-                width: 2,
-              ),
-            ),
-            child: task.completed
-                ? const Icon(Icons.check, color: Colors.white, size: 18)
-                : null,
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.asset(
+            task.image,
+            width: 40,
+            height: 40,
+            fit: BoxFit.cover,
           ),
         ),
 
@@ -219,7 +217,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
         subtitle: Text(_formatDate(task.createdAt)),
 
-        trailing: Icon(Icons.drag_handle, color: Colors.grey.shade300),
+        trailing: GestureDetector(
+          onTap: () => _toggleTask(task),
+          child: Icon(
+            task.completed ? Icons.check_circle : Icons.radio_button_unchecked,
+            color: task.completed ? Custom_green : Colors.grey,
+          ),
+        ),
       ),
     );
   }
@@ -257,9 +261,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 userTasks.add(
                   Task(
                     id: DateTime.now().toString(),
-                    userId: widget.user.id,
+                    userId: currentUser.id,
                     title: controller.text.trim(),
                     createdAt: DateTime.now(),
+                    image: "imgs/task.png",
                   ),
                 );
               });
