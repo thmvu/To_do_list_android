@@ -130,8 +130,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // ================= TASK TAB =================
-
   Widget _buildTasksTab() {
     return Column(
       children: [
