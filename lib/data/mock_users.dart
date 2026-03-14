@@ -6,7 +6,7 @@ List<User> mockUsers = [
     name: "Vũ Từ",
     email: "vutu@gmail.com",
     password: "123456",
-    avatar: "assets/images/anhmeo.jpg",
+    avatar: "imgs/anhmeo.jpg",
   ),
 
   User(
@@ -14,7 +14,7 @@ List<User> mockUsers = [
     name: "Nguyễn Minh",
     email: "minh@gmail.com",
     password: "123456",
-    avatar: "assets/images/anhmeo1.jpg",
+    avatar: "imgs/anhmeo1.jpg",
   ),
 
   User(
@@ -22,6 +22,6 @@ List<User> mockUsers = [
     name: "Trần Anh",
     email: "anh@gmail.com",
     password: "123456",
-    avatar: "assets/images/anhmeo.jpg",
+    avatar: "imgs/anhmeo.jpg",
   ),
 ];
