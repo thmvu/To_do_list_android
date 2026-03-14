@@ -44,7 +44,7 @@ class AboutScreen extends StatelessWidget {
             const Center(
               child: Text(
                 "© 2026 Todo list cua toi",
-                style: TextStyle(fontSize: 16, color: Colors.blue),
+                style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
             ),
           ],
