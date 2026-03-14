@@ -24,6 +24,7 @@ class AboutScreen extends StatelessWidget {
             const SizedBox(height: 15),
 
             buildTeamMember(
+              "imgs/anhmeo.jpg",
               "Từ Hữu Minh Vũ",
               "Project Manager",
               "Đảm bảo tiến độ và chất lượng của dự án.",
@@ -31,6 +32,7 @@ class AboutScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             buildTeamMember(
+              "imgs/anhmeo1.jpg",
               "Phạm Thị Minh Ngọc",
               "Thành Viên",
               "Phát triển các tính năng cùng với bạn trưởng",
@@ -53,6 +55,7 @@ class AboutScreen extends StatelessWidget {
 }
 
 Widget buildTeamMember(
+  String imgs,
   String name,
   String role,
   String description,
@@ -60,7 +63,7 @@ Widget buildTeamMember(
 ) {
   return Row(
     children: [
-      CircleAvatar(radius: 30, child: Icon(icon, size: 30)),
+      CircleAvatar(radius: 30, backgroundImage: AssetImage(imgs)),
       const SizedBox(width: 15),
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
