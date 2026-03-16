@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   userId: currentUser.id,
                   title: controller.text.trim(),
                   createdAt: DateTime.now(),
-                  image: "imgs/task.png",
+                  image: "imgs/project.png",
                 ));
               });
               Navigator.pop(ctx);
@@ -94,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
         index: _currentIndex,
         children: [
           _buildTasksTab(),
-          const CalendarScreen(),
+          CalendarScreen(tasks: userTasks),
           ProfileScreen(user: currentUser),
           const AboutScreen(),
         ],
