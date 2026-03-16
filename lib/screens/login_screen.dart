@@ -12,11 +12,10 @@ class Login_Screen extends StatefulWidget {
 }
 
 class _Login_ScreenState extends State<Login_Screen> {
-  FocusNode emailFocusNode1 = FocusNode();
-  FocusNode passwordFocusNode1 = FocusNode();
-
-  final email = TextEditingController();
-  final password = TextEditingController();
+  final FocusNode emailFocusNode1 = FocusNode();
+  final FocusNode passwordFocusNode1 = FocusNode();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController password = TextEditingController();
 
   bool _obscurePassword = true;
   String? _errorMessage;
@@ -24,12 +23,17 @@ class _Login_ScreenState extends State<Login_Screen> {
   @override
   void initState() {
     super.initState();
-    emailFocusNode1.addListener(() {
-      setState(() {});
-    });
-    passwordFocusNode1.addListener(() {
-      setState(() {});
-    });
+    emailFocusNode1.addListener(() => setState(() {}));
+    passwordFocusNode1.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    emailFocusNode1.dispose();
+    passwordFocusNode1.dispose();
+    email.dispose();
+    password.dispose();
+    super.dispose();
   }
 
   void _handleLogin() {
@@ -37,9 +41,7 @@ class _Login_ScreenState extends State<Login_Screen> {
     final inputPassword = password.text.trim();
 
     if (inputEmail.isEmpty || inputPassword.isEmpty) {
-      setState(() {
-        _errorMessage = 'login_error_empty'.tr();
-      });
+      setState(() => _errorMessage = 'login_error_empty'.tr());
       return;
     }
 
@@ -54,9 +56,7 @@ class _Login_ScreenState extends State<Login_Screen> {
         MaterialPageRoute(builder: (_) => HomeScreen(user: user.first)),
       );
     } else {
-      setState(() {
-        _errorMessage = 'login_error_wrong'.tr();
-      });
+      setState(() => _errorMessage = 'login_error_wrong'.tr());
     }
   }
 
@@ -69,104 +69,39 @@ class _Login_ScreenState extends State<Login_Screen> {
           child: Column(
             children: [
               const SizedBox(height: 20),
-
-              // Nút chuyển ngôn ngữ
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    _buildLangButton('VI', const Locale('vi')),
-                    const SizedBox(width: 6),
-                    _buildLangButton('EN', const Locale('en')),
-                  ],
-                ),
-              ),
-
-              buildImage(),
+              _buildLanguageSwitcher(),
+              _buildImage(),
               const SizedBox(height: 30),
-
-              // Tiêu đề
-              Text(
-                'login_title'.tr(),
-                style: const TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                'login_welcome'.tr(),
-                style: const TextStyle(fontSize: 14, color: Colors.grey),
-              ),
+              _buildTitle(),
               const SizedBox(height: 24),
-
-              textfield(email, emailFocusNode1, 'email'.tr()),
+              _buildEmailField(),
               const SizedBox(height: 16),
-              passwordField(),
+              _buildPasswordField(),
               const SizedBox(height: 10),
-
-              // Thông báo lỗi
-              if (_errorMessage != null)
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 10,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.red.shade50,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.red.shade200),
-                    ),
-                    child: Text(
-                      _errorMessage!,
-                      style: TextStyle(
-                        color: Colors.red.shade700,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                ),
-
+              _buildErrorMessage(),
               const SizedBox(height: 24),
-              loginButton(),
+              _buildLoginButton(),
               const SizedBox(height: 20),
-
-              // Dòng "Không có tài khoản? Đăng ký"
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'no_account'.tr(),
-                      style:
-                          const TextStyle(fontSize: 15, color: Colors.grey),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // TODO: điều hướng sang màn đăng ký
-                      },
-                      child: Text(
-                        'register'.tr(),
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Custom_green,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              _buildRegisterRow(),
               const SizedBox(height: 30),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+
+  Widget _buildLanguageSwitcher() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          _buildLangButton('VI', const Locale('vi')),
+          const SizedBox(width: 6),
+          _buildLangButton('EN', const Locale('en')),
+        ],
       ),
     );
   }
@@ -193,30 +128,82 @@ class _Login_ScreenState extends State<Login_Screen> {
     );
   }
 
-  Widget loginButton() {
+  Widget _buildImage() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: SizedBox(
+      child: Container(
         width: double.infinity,
-        child: ElevatedButton(
-          onPressed: _handleLogin,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Custom_green,
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-          ),
-          child: Text(
-            'login_button'.tr(),
-            style: const TextStyle(fontSize: 18, color: Colors.white),
+        height: 240,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('imgs/anhbay.png'),
+            fit: BoxFit.cover,
           ),
         ),
       ),
     );
   }
 
-  Padding passwordField() {
+  Widget _buildTitle() {
+    return Column(
+      children: [
+        Text(
+          'login_title'.tr(),
+          style: const TextStyle(
+            fontSize: 26,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          'login_welcome'.tr(),
+          style: const TextStyle(fontSize: 14, color: Colors.grey),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEmailField() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: TextField(
+          controller: email,
+          focusNode: emailFocusNode1,
+          keyboardType: TextInputType.emailAddress,
+          style: const TextStyle(fontSize: 18, color: Colors.black),
+          decoration: InputDecoration(
+            prefixIcon: Icon(
+              Icons.email,
+              color: emailFocusNode1.hasFocus
+                  ? Custom_green
+                  : Colors.grey.shade300,
+            ),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 15,
+            ),
+            hintText: 'email'.tr(),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(color: Colors.grey.shade300, width: 2.0),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(color: Custom_green, width: 2.0),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPasswordField() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Container(
@@ -241,9 +228,8 @@ class _Login_ScreenState extends State<Login_Screen> {
                 _obscurePassword ? Icons.visibility_off : Icons.visibility,
                 color: Colors.grey.shade400,
               ),
-              onPressed: () {
-                setState(() => _obscurePassword = !_obscurePassword);
-              },
+              onPressed: () =>
+                  setState(() => _obscurePassword = !_obscurePassword),
             ),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 20,
@@ -264,69 +250,74 @@ class _Login_ScreenState extends State<Login_Screen> {
     );
   }
 
-  Padding textfield(
-    TextEditingController controller,
-    FocusNode focusNode,
-    String typeName,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: TextField(
-          controller: controller,
-          focusNode: focusNode,
-          keyboardType: TextInputType.emailAddress,
-          style: const TextStyle(fontSize: 18, color: Colors.black),
-          decoration: InputDecoration(
-            prefixIcon: Icon(
-              Icons.email,
-              color: focusNode.hasFocus ? Custom_green : Colors.grey.shade300,
-            ),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 15,
-            ),
-            hintText: typeName,
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(color: Colors.grey.shade300, width: 2.0),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(color: Custom_green, width: 2.0),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Padding buildImage() {
+  Widget _buildErrorMessage() {
+    if (_errorMessage == null) return const SizedBox.shrink();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Container(
         width: double.infinity,
-        height: 240,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('imgs/anhbay.png'),
-            fit: BoxFit.cover,
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        decoration: BoxDecoration(
+          color: Colors.red.shade50,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.red.shade200),
+        ),
+        child: Text(
+          _errorMessage!,
+          style: TextStyle(color: Colors.red.shade700, fontSize: 14),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLoginButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: _handleLogin,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Custom_green,
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+          child: Text(
+            'login_button'.tr(),
+            style: const TextStyle(fontSize: 18, color: Colors.white),
           ),
         ),
       ),
     );
   }
 
-  @override
-  void dispose() {
-    emailFocusNode1.dispose();
-    passwordFocusNode1.dispose();
-    email.dispose();
-    password.dispose();
-    super.dispose();
+  Widget _buildRegisterRow() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'no_account'.tr(),
+            style: const TextStyle(fontSize: 15, color: Colors.grey),
+          ),
+          GestureDetector(
+            onTap: () {
+              // TODO: điều hướng sang màn đăng ký
+            },
+            child: Text(
+              'register'.tr(),
+              style: TextStyle(
+                fontSize: 15,
+                color: Custom_green,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

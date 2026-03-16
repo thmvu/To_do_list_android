@@ -1,4 +1,5 @@
 import 'package:du_an_todolist/const/color.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -6,70 +7,55 @@ class AboutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Dùng trực tiếp SingleChildScrollView (không có Scaffold)
-    // vì AboutScreen được nhúng vào HomeScreen qua IndexedStack
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Mô tả ứng dụng
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(18),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.shade200,
-                  blurRadius: 8,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Custom_green.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Icon(Icons.info_outline,
-                          color: Custom_green, size: 22),
-                    ),
-                    const SizedBox(width: 10),
-                    const Text(
-                      'Về ứng dụng',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                const Text(
-                  'Ứng dụng giúp người dùng quản lý công việc cá nhân một cách hiệu quả. '
-                  'Cung cấp các tính năng tạo, chỉnh sửa, xóa công việc và theo dõi tiến độ hoàn thành.',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.black54,
-                    height: 1.5,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
+          _buildAppInfoCard(),
           const SizedBox(height: 20),
+          _buildTeamHeader(),
+          const SizedBox(height: 14),
+          _buildMemberCard(
+            imgPath: 'imgs/anhmeo.jpg',
+            name: 'Từ Hữu Minh Vũ 23010076',
+            role: 'Project Manager',
+            description: 'member1_desc'.tr(),
+          ),
+          const SizedBox(height: 12),
+          _buildMemberCard(
+            imgPath: 'imgs/anhmeo1.jpg',
+            name: 'Phạm Thị Minh Ngọc 23010167',
+            role: 'member_role'.tr(),
+            description: 'member2_desc'.tr(),
+          ),
+          const SizedBox(height: 30),
+          _buildCopyright(),
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
 
-          // Tiêu đề team
+
+  Widget _buildAppInfoCard() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade200,
+            blurRadius: 8,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Row(
             children: [
               Container(
@@ -78,12 +64,12 @@ class AboutScreen extends StatelessWidget {
                   color: Custom_green.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Icon(Icons.group, color: Custom_green, size: 22),
+                child: Icon(Icons.info_outline, color: Custom_green, size: 22),
               ),
               const SizedBox(width: 10),
-              const Text(
-                'Team phát triển',
-                style: TextStyle(
+              Text(
+                'about_app'.tr(),
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
@@ -91,34 +77,41 @@ class AboutScreen extends StatelessWidget {
               ),
             ],
           ),
-
-          const SizedBox(height: 14),
-
-          _buildMemberCard(
-            imgPath: 'imgs/anhmeo.jpg',
-            name: 'Từ Hữu Minh Vũ',
-            role: 'Project Manager',
-            description: 'Đảm bảo tiến độ và chất lượng của dự án.',
-          ),
           const SizedBox(height: 12),
-          _buildMemberCard(
-            imgPath: 'imgs/anhmeo1.jpg',
-            name: 'Phạm Thị Minh Ngọc',
-            role: 'Thành Viên',
-            description: 'Phát triển các tính năng cùng với bạn trưởng.',
-          ),
-
-          const SizedBox(height: 30),
-
-          Center(
-            child: Text(
-              '© 2026 Todo List của tôi',
-              style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
+          Text(
+            'about_description'.tr(),
+            style: const TextStyle(
+              fontSize: 15,
+              color: Colors.black54,
+              height: 1.5,
             ),
           ),
-          const SizedBox(height: 16),
         ],
       ),
+    );
+  }
+
+  Widget _buildTeamHeader() {
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Custom_green.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(Icons.group, color: Custom_green, size: 22),
+        ),
+        const SizedBox(width: 10),
+        Text(
+          'dev_team'.tr(),
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+      ],
     );
   }
 
@@ -163,8 +156,10 @@ class AboutScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
                     color: Custom_green.withOpacity(0.12),
                     borderRadius: BorderRadius.circular(20),
@@ -187,6 +182,15 @@ class AboutScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCopyright() {
+    return Center(
+      child: Text(
+        'copyright'.tr(),
+        style: TextStyle(fontSize: 14, color: Colors.grey.shade500),
       ),
     );
   }
