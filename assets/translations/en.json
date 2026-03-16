@@ -1,0 +1,38 @@
+{
+  "login_title": "Login",
+  "login_welcome": "Welcome back!",
+  "email": "Email",
+  "password": "Password",
+  "login_button": "Login",
+  "login_error_empty": "Please enter both email and password.",
+  "login_error_wrong": "Incorrect email or password!",
+  "no_account": "Don't have an account? ",
+  "register": "Register",
+
+  "hello": "Hello, {}!",
+  "tasks_completed": "{} / {} tasks completed",
+  "no_tasks": "No tasks yet!",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "days_ago": "{} days ago",
+  "add_task": "Add Task",
+  "enter_task": "Enter task...",
+  "cancel": "Cancel",
+  "add": "Add",
+
+  "nav_tasks": "Tasks",
+  "nav_calendar": "Calendar",
+  "nav_profile": "Profile",
+  "nav_about": "About",
+
+  "about_app": "About App",
+  "about_description": "The app helps users manage personal tasks effectively. It provides features to create, edit, delete tasks and track completion progress.",
+  "dev_team": "Development Team",
+  "member_role": "Member",
+  "member1_desc": "Ensures project progress and quality.",
+  "member2_desc": "Develops features with the team leader.",
+  "copyright": "© 2026 My Todo List",
+
+  "profile": "Profile",
+  "task_calendar": "Task Calendar"
+}

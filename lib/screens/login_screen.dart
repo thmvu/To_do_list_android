@@ -1,6 +1,7 @@
 import 'package:du_an_todolist/const/color.dart';
 import 'package:du_an_todolist/data/mock_users.dart';
 import 'package:du_an_todolist/screens/home_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class Login_Screen extends StatefulWidget {
@@ -37,7 +38,7 @@ class _Login_ScreenState extends State<Login_Screen> {
 
     if (inputEmail.isEmpty || inputPassword.isEmpty) {
       setState(() {
-        _errorMessage = 'Vui lòng nhập đầy đủ email và mật khẩu.';
+        _errorMessage = 'login_error_empty'.tr();
       });
       return;
     }
@@ -54,7 +55,7 @@ class _Login_ScreenState extends State<Login_Screen> {
       );
     } else {
       setState(() {
-        _errorMessage = 'Email hoặc mật khẩu không đúng!';
+        _errorMessage = 'login_error_wrong'.tr();
       });
     }
   }
@@ -68,26 +69,40 @@ class _Login_ScreenState extends State<Login_Screen> {
           child: Column(
             children: [
               const SizedBox(height: 20),
+
+              // Nút chuyển ngôn ngữ
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    _buildLangButton('VI', const Locale('vi')),
+                    const SizedBox(width: 6),
+                    _buildLangButton('EN', const Locale('en')),
+                  ],
+                ),
+              ),
+
               buildImage(),
               const SizedBox(height: 30),
 
               // Tiêu đề
-              const Text(
-                'Đăng nhập',
-                style: TextStyle(
+              Text(
+                'login_title'.tr(),
+                style: const TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
               ),
               const SizedBox(height: 6),
-              const Text(
-                'Chào mừng bạn trở lại!',
-                style: TextStyle(fontSize: 14, color: Colors.grey),
+              Text(
+                'login_welcome'.tr(),
+                style: const TextStyle(fontSize: 14, color: Colors.grey),
               ),
               const SizedBox(height: 24),
 
-              textfield(email, emailFocusNode1, 'Email'),
+              textfield(email, emailFocusNode1, 'email'.tr()),
               const SizedBox(height: 16),
               passwordField(),
               const SizedBox(height: 10),
@@ -127,16 +142,17 @@ class _Login_ScreenState extends State<Login_Screen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      'Không có tài khoản? ',
-                      style: TextStyle(fontSize: 15, color: Colors.grey),
+                    Text(
+                      'no_account'.tr(),
+                      style:
+                          const TextStyle(fontSize: 15, color: Colors.grey),
                     ),
                     GestureDetector(
                       onTap: () {
                         // TODO: điều hướng sang màn đăng ký
                       },
                       child: Text(
-                        'Đăng ký',
+                        'register'.tr(),
                         style: TextStyle(
                           fontSize: 15,
                           color: Custom_green,
@@ -149,6 +165,28 @@ class _Login_ScreenState extends State<Login_Screen> {
               ),
               const SizedBox(height: 30),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLangButton(String label, Locale locale) {
+    final isActive = context.locale == locale;
+    return GestureDetector(
+      onTap: () => context.setLocale(locale),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+        decoration: BoxDecoration(
+          color: isActive ? Custom_green : Colors.grey.shade200,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.bold,
+            color: isActive ? Colors.white : Colors.black54,
           ),
         ),
       ),
@@ -169,9 +207,9 @@ class _Login_ScreenState extends State<Login_Screen> {
               borderRadius: BorderRadius.circular(15),
             ),
           ),
-          child: const Text(
-            'Đăng nhập',
-            style: TextStyle(fontSize: 18, color: Colors.white),
+          child: Text(
+            'login_button'.tr(),
+            style: const TextStyle(fontSize: 18, color: Colors.white),
           ),
         ),
       ),
@@ -211,7 +249,7 @@ class _Login_ScreenState extends State<Login_Screen> {
               horizontal: 20,
               vertical: 15,
             ),
-            hintText: 'Mật khẩu',
+            hintText: 'password'.tr(),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
               borderSide: BorderSide(color: Colors.grey.shade300, width: 2.0),

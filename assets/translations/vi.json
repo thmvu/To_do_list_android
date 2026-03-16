@@ -1,0 +1,38 @@
+{
+  "login_title": "Đăng nhập",
+  "login_welcome": "Chào mừng bạn trở lại!",
+  "email": "Email",
+  "password": "Mật khẩu",
+  "login_button": "Đăng nhập",
+  "login_error_empty": "Vui lòng nhập đầy đủ email và mật khẩu.",
+  "login_error_wrong": "Email hoặc mật khẩu không đúng!",
+  "no_account": "Không có tài khoản? ",
+  "register": "Đăng ký",
+
+  "hello": "Xin chào, {}!",
+  "tasks_completed": "{} / {} nhiệm vụ hoàn thành",
+  "no_tasks": "Chưa có nhiệm vụ nào!",
+  "today": "Hôm nay",
+  "yesterday": "Hôm qua",
+  "days_ago": "{} ngày trước",
+  "add_task": "Thêm nhiệm vụ",
+  "enter_task": "Nhập nhiệm vụ...",
+  "cancel": "Huỷ",
+  "add": "Thêm",
+
+  "nav_tasks": "Nhiệm vụ",
+  "nav_calendar": "Lịch",
+  "nav_profile": "Hồ sơ",
+  "nav_about": "Giới thiệu",
+
+  "about_app": "Về ứng dụng",
+  "about_description": "Ứng dụng giúp người dùng quản lý công việc cá nhân một cách hiệu quả. Cung cấp các tính năng tạo, chỉnh sửa, xóa công việc và theo dõi tiến độ hoàn thành.",
+  "dev_team": "Team phát triển",
+  "member_role": "Thành Viên",
+  "member1_desc": "Đảm bảo tiến độ và chất lượng của dự án.",
+  "member2_desc": "Phát triển các tính năng cùng với bạn trưởng.",
+  "copyright": "© 2026 Todo List của tôi",
+
+  "profile": "Hồ sơ",
+  "task_calendar": "Lịch công việc"
+}
