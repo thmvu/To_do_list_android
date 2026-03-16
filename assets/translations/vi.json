@@ -34,5 +34,6 @@
   "copyright": "© 2026 Todo List của tôi",
 
   "profile": "Hồ sơ",
-  "task_calendar": "Lịch công việc"
+  "task_calendar": "Lịch công việc",
+  "tasks_count": "Tổng {} nhiệm vụ"
 }

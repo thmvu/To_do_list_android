@@ -34,5 +34,6 @@
   "copyright": "© 2026 My Todo List",
 
   "profile": "Profile",
-  "task_calendar": "Task Calendar"
+  "task_calendar": "Task Calendar",
+  "tasks_count": "{} tasks in total"
 }

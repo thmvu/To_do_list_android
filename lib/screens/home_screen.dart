@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           _buildTasksTab(),
           CalendarScreen(tasks: userTasks),
-          ProfileScreen(user: currentUser),
+          ProfileScreen(user: currentUser, taskCount: userTasks.length),
           const AboutScreen(),
         ],
       ),

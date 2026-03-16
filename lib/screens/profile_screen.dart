@@ -4,7 +4,8 @@ import 'package:du_an_todolist/models/user.dart';
 
 class ProfileScreen extends StatelessWidget {
   final User user;
-  const ProfileScreen({super.key, required this.user});
+  final int taskCount;
+  const ProfileScreen({super.key, required this.user, this.taskCount = 0});
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +20,16 @@ class ProfileScreen extends StatelessWidget {
             _buildName(),
             const SizedBox(height: 10),
             _buildEmail(),
+            const SizedBox(height: 10),
+            _buildTasksCount(),
           ],
         ),
       ),
     );
   }
 
-
   Widget _buildAvatar() {
-    return CircleAvatar(
-      radius: 50,
-      backgroundImage: AssetImage(user.avatar),
-    );
+    return CircleAvatar(radius: 50, backgroundImage: AssetImage(user.avatar));
   }
 
   Widget _buildName() {
@@ -42,5 +41,12 @@ class ProfileScreen extends StatelessWidget {
 
   Widget _buildEmail() {
     return Text(user.email, style: const TextStyle(fontSize: 16));
+  }
+
+  Widget _buildTasksCount() {
+    return Text(
+      'tasks_count'.tr(args: [taskCount.toString()]),
+      style: const TextStyle(fontSize: 16, color: Colors.grey),
+    );
   }
 }
