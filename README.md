@@ -1,8 +1,14 @@
 # 📝 Todo List App
 
 Ứng dụng quản lý công việc (To-do List) được phát triển bằng **Flutter**, hỗ trợ đa ngôn ngữ (Tiếng Việt & Tiếng Anh).
+## 👨‍💻 Nhóm phát triển
 
+| Họ và tên | MSSV | Vai trò |
+|---|---|---|
+| **Từ Hữu Minh Vũ** | 23010076 | Project Manager |
+| **Phạm Thị Minh Ngọc** | 23010167 | Developer |
 ---
+
 
 ## 📱 Màn hình chính
 
@@ -138,12 +144,7 @@ flutter run
 
 ---
 
-## 👨‍💻 Nhóm phát triển
 
-| Họ và tên | MSSV | Vai trò |
-|---|---|---|
-| **Từ Hữu Minh Vũ** | 23010076 | Project Manager |
-| **Phạm Thị Minh Ngọc** | 23010167 | Developer |
 
 ---
 
