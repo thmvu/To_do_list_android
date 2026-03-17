@@ -5,7 +5,7 @@
 
 | Họ và tên | MSSV | Vai trò |
 |---|---|---|
-| **Từ Hữu Minh Vũ** | 23010076 | Project Manager |
+| **Từ Hữu Minh Vũ** | 23010076 | Project Manager + Code |
 | **Phạm Thị Minh Ngọc** | 23010167 | Developer |
 ---
 
